@@ -1,6 +1,6 @@
 const riskyWords = [
   // Contact methods
-  "email", "e-mail", "gmail", "hotmail", "outlook", "yahoo", "phone", "mobile", "number", "contact", "call",
+  "mail", "email", "e-mail", "gmail", "hotmail", "outlook", "yahoo", "phone", "mobile", "number", "contact", "call",
   "whatsapp", "telegram", "skype", "zoom", "meet", "hangouts", "viber", "imo", "signal",
 
   // Payment & financial
