@@ -1,135 +1,159 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Fiverr Safe Message Tool</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 750px;
-            margin: 40px auto;
-            padding: 20px;
-            background: #f4f6f8;
-        }
-
-        h2,
-        h3 {
-            margin-bottom: 10px;
-        }
-
-        textarea {
-            width: 100%;
-            height: 120px;
-            padding: 10px;
-            font-size: 1em;
-            margin-bottom: 10px;
-        }
-
-        button {
-            padding: 8px 15px;
-            font-size: 0.95em;
-            margin: 5px 5px 15px 0;
-            cursor: pointer;
-        }
-
-        .output {
-            background: #fff;
-            padding: 15px;
-            border: 1px solid #ccc;
-            white-space: pre-wrap;
-            min-height: 80px;
-        }
-
-        .counter {
-            font-size: 0.9em;
-            color: #555;
-            margin-bottom: 10px;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Fiverr Safe Message Tool with Restricted Words</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 750px;
+      margin: 40px auto;
+      padding: 20px;
+      background: #f4f6f8;
+    }
+    h2, h3 { margin-bottom: 10px; }
+    textarea {
+      width: 100%;
+      height: 120px;
+      padding: 10px;
+      font-size: 1em;
+      margin-bottom: 10px;
+    }
+    button {
+      padding: 8px 15px;
+      font-size: 0.95em;
+      margin: 5px 5px 15px 0;
+      cursor: pointer;
+    }
+    .output {
+      background: #fff;
+      padding: 15px;
+      border: 1px solid #ccc;
+      white-space: pre-wrap;
+      min-height: 80px;
+    }
+    .counter {
+      font-size: 0.9em;
+      color: #555;
+      margin-bottom: 10px;
+    }
+    .restricted-words {
+      margin-top: 15px;
+      padding: 10px;
+      background: #fff3f3;
+      border: 1px solid #f5c2c2;
+      color: #a33;
+      font-weight: bold;
+    }
+  </style>
 </head>
-
 <body>
 
-    <h2>🛡 Fiverr Safe Message Tool</h2>
+  <h2>🛡 Fiverr Safe Message Tool</h2>
+  
+  <label><strong>Your Message:</strong></label>
+  <textarea id="inputText" placeholder="Write your Fiverr message..."></textarea>
+  <div class="counter" id="inputCount">Words: 0</div>
 
-    <label><strong>Your Message:</strong></label>
-    <textarea id="inputText" placeholder="Write your Fiverr message..."></textarea>
-    <div class="counter" id="inputCount">Words: 0</div>
+  <button onclick="processMessage()">🔍 Make It Safe</button>
 
-    <button onclick="processMessage()">🔍 Make It Safe</button>
+  <h3>✅ Safe Message:</h3>
+  <div class="output" id="outputText"></div>
+  <div class="counter" id="outputCount">Words: 0</div>
 
-    <h3>✅ Safe Message:</h3>
-    <div class="output" id="outputText"></div>
-    <div class="counter" id="outputCount">Words: 0</div>
+  <button onclick="copyOutput()">📋 Copy Safe Message</button>
+  <button onclick="pasteToInput()">📥 Paste to Input</button>
 
-    <button onclick="copyOutput()">📋 Copy Safe Message</button>
-    <button onclick="pasteToInput()">📥 Paste to Input</button>
+  <div id="restrictedWords" class="restricted-words" style="display:none;"></div>
 
-    <script>
-        const riskyWords = [
-            "email", "gmail", "yahoo", "outlook",
-            "phone", "whatsapp", "telegram", "skype", "viber", "signal", "wechat",
-            "payment", "paypal", "skrill", "bkash", "nagad", "rocket", "bank", "transfer",
-            "direct contact", "contact me", "outside", "outside fiverr", "offsite",
-            "zoom", "meet", "google meet",
-            "personal website", "portfolio", "linkedin"
-        ];
+  <script>
+    const riskyWords = [
+      "email", "gmail", "yahoo", "outlook",
+      "phone", "whatsapp", "telegram", "skype", "viber", "signal", "wechat",
+      "payment", "paypal", "skrill", "bkash", "nagad", "rocket", "bank", "transfer",
+      "direct contact", "contact me", "outside", "outside fiverr", "offsite",
+      "zoom", "meet", "google meet",
+      "personal website", "portfolio", "linkedin"
+    ];
 
-        function insertHyphen(word) {
-            const clean = word.replace(/[^a-zA-Z]/g, "");
-            if (clean.length <= 4) return word;
+    function insertHyphen(word) {
+      const clean = word.replace(/[^a-zA-Z]/g, "");
+      if (clean.length <= 4) return word;
 
-            const index = Math.floor(Math.random() * (clean.length - 2)) + 1;
-            const newWord = clean.slice(0, index) + "-" + clean.slice(index);
-            return word.replace(clean, newWord);
+      const index = Math.floor(Math.random() * (clean.length - 2)) + 1;
+      const newWord = clean.slice(0, index) + "-" + clean.slice(index);
+      return word.replace(clean, newWord);
+    }
+
+    function processMessage() {
+      let text = document.getElementById("inputText").value;
+      let foundWords = [];
+
+      riskyWords.forEach(risky => {
+        const pattern = new RegExp(`\\b${risky}\\b`, "gi");
+
+        // Detect all matches and add to foundWords array (avoid duplicates)
+        let matches = text.match(pattern);
+        if (matches) {
+          matches.forEach(m => {
+            const lower = m.toLowerCase();
+            if (!foundWords.includes(lower)) foundWords.push(lower);
+          });
         }
 
-        function processMessage() {
-            let text = document.getElementById("inputText").value;
+        // Replace with hyphenated version
+        text = text.replace(pattern, match => insertHyphen(match));
+      });
 
-            riskyWords.forEach(risky => {
-                const pattern = new RegExp(`\\b${risky}\\b`, "gi");
-                text = text.replace(pattern, match => insertHyphen(match));
-            });
+      document.getElementById("outputText").innerText = text;
+      updateCounts();
 
-            document.getElementById("outputText").innerText = text;
-            updateCounts();
+      // Show restricted words found
+      const restrictedDiv = document.getElementById("restrictedWords");
+      if (foundWords.length) {
+        restrictedDiv.style.display = "block";
+        restrictedDiv.innerText = "🚫 Found restricted words: " + foundWords.join(", ");
+      } else {
+        restrictedDiv.style.display = "none";
+        restrictedDiv.innerText = "";
+      }
+    }
+
+    function copyOutput() {
+      const text = document.getElementById("outputText").innerText;
+      navigator.clipboard.writeText(text)
+        .then(() => alert("✅ Message copied!"))
+        .catch(() => alert("❌ Copy failed!"));
+    }
+
+    async function pasteToInput() {
+      try {
+        const text = await navigator.clipboard.readText();
+        if (!text.trim()) {
+          alert("⚠️ Clipboard is empty!");
+          return;
         }
-
-        function copyOutput() {
-            const text = document.getElementById("outputText").innerText;
-            navigator.clipboard.writeText(text)
-                .then(() => alert("✅ Message copied!"))
-                .catch(() => alert("❌ Copy failed!"));
+        document.getElementById("inputText").value = text;
+        updateCounts();
+      } catch (err) {
+        const fallback = prompt("⚠️ Clipboard access blocked. Paste manually here:");
+        if (fallback) {
+          document.getElementById("inputText").value = fallback;
+          updateCounts();
         }
+      }
+    }
 
-        async function pasteToInput() {
-            try {
-                const text = await navigator.clipboard.readText();
-                if (!text.trim()) {
-                    alert("⚠️ Clipboard is empty!");
-                    return;
-                }
-                document.getElementById("inputText").value = text;
-                updateCounts();
-            } catch (err) {
-                alert("❌ Clipboard access failed. Please allow permission or use Ctrl+V.");
-                console.error(err);
-            }
-        }
+    function updateCounts() {
+      const input = document.getElementById("inputText").value.trim();
+      const output = document.getElementById("outputText").innerText.trim();
+      document.getElementById("inputCount").innerText = "Words: " + (input ? input.split(/\s+/).length : 0);
+      document.getElementById("outputCount").innerText = "Words: " + (output ? output.split(/\s+/).length : 0);
+    }
 
-        function updateCounts() {
-            const input = document.getElementById("inputText").value.trim();
-            const output = document.getElementById("outputText").innerText.trim();
-            document.getElementById("inputCount").innerText = "Words: " + (input ? input.split(/\s+/).length : 0);
-            document.getElementById("outputCount").innerText = "Words: " + (output ? output.split(/\s+/).length : 0);
-        }
-
-        document.getElementById("inputText").addEventListener("input", updateCounts);
-    </script>
+    document.getElementById("inputText").addEventListener("input", updateCounts);
+  </script>
 
 </body>
-
 </html>
