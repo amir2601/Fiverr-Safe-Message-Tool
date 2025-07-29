@@ -11,7 +11,8 @@ const riskyWords = [
   "personal website", "domain", "upwork", "freelancer", "freelancer.com", "peopleperhour", "toptal", "fiverr alternative", "Trustpilot reviews", "Google reviews",
 
   // Social platforms
-  "facebook", "messenger", "instagram", "linkedin", "twitter", "x.com", "snapchat", "tiktok", "youtube", "pinterest", "reddit", "discord", "watch hour", "Auto like", "Auto likes", "Auto follower", "Auto followers",
+  "facebook", "messenger", "instagram", "linkedin", "twitter", "x.com", "snapchat", "tiktok", "youtube", "pinterest", "reddit", "discord", "watch hour",
+  "auto like", "auto likes", "auto follower", "auto followers",
 
   // Policy evasion phrases
   "give me your number", "contact me outside", "message me on", "hire me on", "work outside fiverr", "pay directly",
@@ -26,92 +27,85 @@ const riskyWords = [
   "kill", "die", "suicide", "bomb", "terrorist", "attack", "shoot", "gun", "weapon"
 ];
 
+// Insert hyphen in middle of risky word (cleaned)
 function insertHyphen(word) {
-    const clean = word.replace(/[^a-zA-Z]/g, "");
-    if (clean.length < 2) return word;
+  const clean = word.replace(/[^a-zA-Z]/g, "");
+  if (clean.length < 2) return word;
 
-    let pos;
-    if (clean.length === 2) {
-        pos = 1; //
-    } else {
-        pos = Math.floor(clean.length / 2); //
-    }
+  const pos = clean.length === 2 ? 1 : Math.floor(clean.length / 2);
+  const hyphenated = clean.slice(0, pos) + "-" + clean.slice(pos);
 
-    const hyphenated = clean.slice(0, pos) + "-" + clean.slice(pos);
-    return word.replace(clean, hyphenated);
+  return word.replace(clean, hyphenated);
 }
 
+// Main processing
 function processMessage() {
-    let text = document.getElementById("inputText").value;
-    let foundWords = [];
+  let text = document.getElementById("inputText").value;
+  if (!text.trim()) return alert("⚠️ Input is empty!");
 
-    riskyWords.forEach(risky => {
-        const pattern = new RegExp(`\\b${risky}\\b`, "gi");
+  const foundWords = new Set();
 
-        // Detect all matches and add to foundWords array (avoid duplicates)
-        let matches = text.match(pattern);
-        if (matches) {
-            matches.forEach(m => {
-                const lower = m.toLowerCase();
-                if (!foundWords.includes(lower)) foundWords.push(lower);
-            });
-        }
+  riskyWords.forEach(risky => {
+    const pattern = new RegExp(`\\b${risky}\\b`, "gi");
 
-        // Replace with hyphenated version
-        text = text.replace(pattern, match => insertHyphen(match));
+    text = text.replace(pattern, match => {
+      foundWords.add(match.toLowerCase());
+      return insertHyphen(match);
     });
+  });
 
-    document.getElementById("outputText").innerText = text;
-    updateCounts();
+  document.getElementById("outputText").innerText = text;
+  updateCounts();
 
-    // Show restricted words found
-    const restrictedDiv = document.getElementById("restrictedWords");
-    if (foundWords.length) {
-        restrictedDiv.style.display = "block";
-        restrictedDiv.innerText = "🚫 Found restricted words: " + foundWords.join(", ");
-    } else {
-        restrictedDiv.style.display = "none";
-        restrictedDiv.innerText = "";
-    }
+  const restrictedDiv = document.getElementById("restrictedWords");
+  if (foundWords.size) {
+    restrictedDiv.style.display = "block";
+    restrictedDiv.innerText = "🚫 Found restricted words: " + Array.from(foundWords).join(", ");
+  } else {
+    restrictedDiv.style.display = "none";
+    restrictedDiv.innerText = "";
+  }
 }
 
+// Copy output
 function copyOutput() {
-    const text = document.getElementById("outputText").innerText;
-    navigator.clipboard.writeText(text)
-        .then(() => alert("✅ Message copied!"))
-        .catch(() => alert("❌ Copy failed!"));
+  const text = document.getElementById("outputText").innerText;
+  if (!text.trim()) return alert("⚠️ Nothing to copy!");
+  navigator.clipboard.writeText(text)
+    .then(() => alert("✅ Message copied!"))
+    .catch(() => alert("❌ Copy failed!"));
 }
 
+// Paste clipboard text
 async function pasteToInput() {
-    try {
-        const text = await navigator.clipboard.readText();
-        if (!text.trim()) {
-            alert("⚠️ Clipboard is empty!");
-            return;
-        }
-        document.getElementById("inputText").value = text;
-        updateCounts();
-    } catch (err) {
-        const fallback = prompt("⚠️ Clipboard access blocked. Paste manually here:");
-        if (fallback) {
-            document.getElementById("inputText").value = fallback;
-            updateCounts();
-        }
+  try {
+    const text = await navigator.clipboard.readText();
+    if (!text.trim()) {
+      alert("⚠️ Clipboard is empty!");
+      return;
     }
+    document.getElementById("inputText").value = text;
+    updateCounts();
+  } catch (err) {
+    const fallback = prompt("⚠️ Clipboard access blocked. Paste manually here:");
+    if (fallback) {
+      document.getElementById("inputText").value = fallback;
+      updateCounts();
+    }
+  }
 }
 
+// Update word/char count
 function updateCounts() {
-    const input = document.getElementById("inputText").value;
-    const output = document.getElementById("outputText").innerText;
+  const input = document.getElementById("inputText").value;
+  const output = document.getElementById("outputText").innerText;
 
-    const inputWords = input.trim() ? input.trim().split(/\s+/).length : 0;
-    const inputChars = input.length;
+  const inputWords = input.trim().split(/\s+/).filter(Boolean).length;
+  const outputWords = output.trim().split(/\s+/).filter(Boolean).length;
 
-    const outputWords = output.trim() ? output.trim().split(/\s+/).length : 0;
-    const outputChars = output.length;
-
-    document.getElementById("inputCount").innerText = `Words: ${inputWords} | Characters: ${inputChars}`;
-    document.getElementById("outputCount").innerText = `Words: ${outputWords} | Characters: ${outputChars}`;
+  document.getElementById("inputCount").innerText = `Words: ${inputWords} | Characters: ${input.length}`;
+  document.getElementById("outputCount").innerText = `Words: ${outputWords} | Characters: ${output.length}`;
 }
 
+// Live count on input
 document.getElementById("inputText").addEventListener("input", updateCounts);
