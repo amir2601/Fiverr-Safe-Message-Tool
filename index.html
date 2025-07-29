@@ -60,11 +60,12 @@
     </style>
 </head>
 
-<body> 
+<body>
 
     <h2>🛡 Fiverr Safe Message Tool</h2>
 
-    <h4>🔔 দ্রষ্টব্য: অনাকাঙ্খিত ঘটনা এড়াতে ফাইনাল মেসেজটি ম্যানুয়ালি চেক করে নেওয়ার অনুরোধ রইল। টুলটি সর্বোচ্চ সতর্কতার সাথে কাজ করলেও ১০০% নিখুঁত হওয়ার নিশ্চয়তা দেওয়া যায় না।</h4>
+    <h4>🔔 দ্রষ্টব্য: অনাকাঙ্খিত ঘটনা এড়াতে ফাইনাল মেসেজটি ম্যানুয়ালি চেক করে নেওয়ার অনুরোধ রইল। টুলটি সর্বোচ্চ সতর্কতার
+        সাথে কাজ করলেও ১০০% নিখুঁত হওয়ার নিশ্চয়তা দেওয়া যায় না।</h4>
 
     <br>
 
@@ -162,10 +163,17 @@
         }
 
         function updateCounts() {
-            const input = document.getElementById("inputText").value.trim();
-            const output = document.getElementById("outputText").innerText.trim();
-            document.getElementById("inputCount").innerText = "Words: " + (input ? input.split(/\s+/).length : 0);
-            document.getElementById("outputCount").innerText = "Words: " + (output ? output.split(/\s+/).length : 0);
+            const input = document.getElementById("inputText").value;
+            const output = document.getElementById("outputText").innerText;
+
+            const inputWords = input.trim() ? input.trim().split(/\s+/).length : 0;
+            const inputChars = input.length;
+
+            const outputWords = output.trim() ? output.trim().split(/\s+/).length : 0;
+            const outputChars = output.length;
+
+            document.getElementById("inputCount").innerText = `Words: ${inputWords} | Characters: ${inputChars}`;
+            document.getElementById("outputCount").innerText = `Words: ${outputWords} | Characters: ${outputChars}`;
         }
 
         document.getElementById("inputText").addEventListener("input", updateCounts);
