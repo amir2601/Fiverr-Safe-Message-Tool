@@ -44,18 +44,22 @@ function processMessage() {
   if (!text.trim()) return alert("⚠️ Input is empty!");
 
   const foundWords = new Set();
+  const highlight = document.getElementById("highlightToggle").checked;
 
   riskyWords.forEach(risky => {
-    const pattern = new RegExp(`\\b(${risky})\\b`, "gi");
+    const pattern = new RegExp(`\\b${risky}\\b`, "gi");
 
     text = text.replace(pattern, match => {
       foundWords.add(match.toLowerCase());
-      const safeWord = insertHyphen(match);
-      return `<span class="highlight">${safeWord}</span>`;
+      const cleaned = insertHyphen(match);
+      return highlight
+        ? `<span class="highlight">${cleaned}</span>`
+        : cleaned;
     });
   });
 
-  document.getElementById("outputText").innerHTML = text; // <-- use innerHTML now
+  const outputDiv = document.getElementById("outputText");
+  outputDiv.innerHTML = text;
   updateCounts();
 
   const restrictedDiv = document.getElementById("restrictedWords");

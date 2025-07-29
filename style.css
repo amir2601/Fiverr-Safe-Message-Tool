@@ -50,9 +50,9 @@ button {
 }
 
 .highlight {
-    background-color: #ffe0e0;
-    color: #b30000;
-    font-weight: bold;
-    padding: 1px 3px;
-    border-radius: 3px;
+  background-color: #ffcccc;
+  color: #a00;
+  font-weight: bold;
+  padding: 2px 4px;
+  border-radius: 3px;
 }
