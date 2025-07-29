@@ -70,6 +70,8 @@ function processMessage() {
     restrictedDiv.style.display = "none";
     restrictedDiv.innerText = "";
   }
+
+  document.getElementById("highlightToggle").addEventListener("change", processMessage);
 }
 
 // Copy output
