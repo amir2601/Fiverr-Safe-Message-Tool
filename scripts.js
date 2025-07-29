@@ -1,4 +1,26 @@
-const riskyWords = ["email", "e-mail", "gmail", "hotmail", "outlook", "yahoo", "phone", "mobile", "whatsapp", "telegram", "skype", "zoom", "meet", "hangouts", "number", "contact", "call", "pay", "payment", "paypal", "venmo", "cashapp", "bank", "western union", "moneygram", "btc", "bitcoin", "crypto", "wallet", "wire transfer", "invoice", "outside fiverr", "off fiverr", "direct payment", "personal website", "domain", "link", "upwork", "freelancer.com", "peopleperhour", "toptal", "facebook", "messenger", "instagram", "linkedin", "twitter", "x.com", "snapchat", "tiktok"
+const riskyWords = [
+  // Contact methods
+  "email", "e-mail", "gmail", "hotmail", "outlook", "yahoo", "phone", "mobile", "number", "contact", "call",
+  "whatsapp", "telegram", "skype", "zoom", "meet", "hangouts", "viber", "imo", "signal",
+
+  // Payment & financial
+  "pay", "payment", "paypal", "venmo", "cashapp", "bank", "western union", "moneygram", "btc", "bitcoin", "crypto", "wallet",
+  "wire transfer", "invoice", "direct payment", "outside fiverr", "off fiverr", "send money", "money",
+
+  // External links/platforms
+  "personal website", "domain", "upwork", "freelancer", "freelancer.com", "peopleperhour", "toptal", "fiverr alternative",
+
+  // Social platforms
+  "facebook", "messenger", "instagram", "linkedin", "twitter", "x.com", "snapchat", "tiktok", "youtube", "pinterest", "reddit", "discord",
+
+  // Policy evasion phrases
+  "give me your number", "contact me outside", "message me on", "hire me on", "work outside fiverr", "pay directly",
+
+  // Inappropriate/explicit (partial list for demo)
+  "fuck", "shit", "bitch", "bastard", "asshole", "dick", "pussy", "slut", "whore", "cunt", "nude", "nudes", "porn", "sex", "hentai",
+
+  // Threats/violence
+  "kill", "die", "suicide", "bomb", "terrorist", "attack", "shoot", "gun", "weapon"
 ];
 
 function insertHyphen(word) {
