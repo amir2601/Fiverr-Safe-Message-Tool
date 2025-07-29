@@ -16,6 +16,9 @@ const riskyWords = [
   // Policy evasion phrases
   "give me your number", "contact me outside", "message me on", "hire me on", "work outside fiverr", "pay directly",
 
+  // Gambling/Casino
+  "gambling", "casino", "betting", "sports betting", "poker", "slot games", "slots", "blackjack", "crypto casino", "roulette", "sportsbook", "virtual casino", "betting tips",
+
   // Inappropriate/explicit
   "fuck", "shit", "bitch", "bastard", "asshole", "dick", "pussy", "slut", "whore", "cunt", "nude", "nudes", "porn", "sex", "hentai", "adult content",
 
