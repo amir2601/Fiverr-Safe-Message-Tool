@@ -68,14 +68,8 @@
   <div id="restrictedWords" class="restricted-words" style="display:none;"></div>
 
   <script>
-    const riskyWords = [
-      "email", "gmail", "yahoo", "outlook",
-      "phone", "whatsapp", "telegram", "skype", "viber", "signal", "wechat",
-      "payment", "paypal", "skrill", "bkash", "nagad", "rocket", "bank", "transfer",
-      "direct contact", "contact me", "outside", "outside fiverr", "offsite",
-      "zoom", "meet", "google meet",
-      "personal website", "portfolio", "linkedin"
-    ];
+    const riskyWords = ["email", "e-mail", "gmail", "hotmail", "outlook", "yahoo", "phone", "mobile", "whatsapp", "telegram", "skype", "zoom", "meet", "hangouts", "number", "contact", "call", "pay", "payment", "paypal", "venmo", "cashapp", "bank", "western union", "moneygram", "btc", "bitcoin", "crypto", "wallet", "wire transfer", "invoice", "outside fiverr", "off fiverr", "direct payment", "personal website", "domain", "link", "upwork", "freelancer.com", "peopleperhour", "toptal"
+];
 
     function insertHyphen(word) {
       const clean = word.replace(/[^a-zA-Z]/g, "");
