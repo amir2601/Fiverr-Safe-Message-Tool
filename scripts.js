@@ -8,16 +8,16 @@ const riskyWords = [
   "wire transfer", "invoice", "direct payment", "outside fiverr", "outside fiver", "off fiverr", "off fiver", "send money", "money",
 
   // External links/platforms
-  "personal website", "domain", "upwork", "freelancer", "freelancer.com", "peopleperhour", "toptal", "fiverr alternative",
+  "personal website", "domain", "upwork", "freelancer", "freelancer.com", "peopleperhour", "toptal", "fiverr alternative", "Trustpilot reviews", "Google reviews",
 
   // Social platforms
-  "facebook", "messenger", "instagram", "linkedin", "twitter", "x.com", "snapchat", "tiktok", "youtube", "pinterest", "reddit", "discord",
+  "facebook", "messenger", "instagram", "linkedin", "twitter", "x.com", "snapchat", "tiktok", "youtube", "pinterest", "reddit", "discord", "watch hour", "Auto like", "Auto likes", "Auto follower", "Auto followers",
 
   // Policy evasion phrases
   "give me your number", "contact me outside", "message me on", "hire me on", "work outside fiverr", "pay directly",
 
-  // Inappropriate/explicit (partial list for demo)
-  "fuck", "shit", "bitch", "bastard", "asshole", "dick", "pussy", "slut", "whore", "cunt", "nude", "nudes", "porn", "sex", "hentai",
+  // Inappropriate/explicit
+  "fuck", "shit", "bitch", "bastard", "asshole", "dick", "pussy", "slut", "whore", "cunt", "nude", "nudes", "porn", "sex", "hentai", "adult content",
 
   // Threats/violence
   "kill", "die", "suicide", "bomb", "terrorist", "attack", "shoot", "gun", "weapon"
