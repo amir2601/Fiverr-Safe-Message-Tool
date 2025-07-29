@@ -48,3 +48,11 @@ button {
     color: #a33;
     font-weight: bold;
 }
+
+.highlight {
+    background-color: #ffe0e0;
+    color: #b30000;
+    font-weight: bold;
+    padding: 1px 3px;
+    border-radius: 3px;
+}

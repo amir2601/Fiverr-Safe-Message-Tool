@@ -46,15 +46,16 @@ function processMessage() {
   const foundWords = new Set();
 
   riskyWords.forEach(risky => {
-    const pattern = new RegExp(`\\b${risky}\\b`, "gi");
+    const pattern = new RegExp(`\\b(${risky})\\b`, "gi");
 
     text = text.replace(pattern, match => {
       foundWords.add(match.toLowerCase());
-      return insertHyphen(match);
+      const safeWord = insertHyphen(match);
+      return `<span class="highlight">${safeWord}</span>`;
     });
   });
 
-  document.getElementById("outputText").innerText = text;
+  document.getElementById("outputText").innerHTML = text; // <-- use innerHTML now
   updateCounts();
 
   const restrictedDiv = document.getElementById("restrictedWords");
