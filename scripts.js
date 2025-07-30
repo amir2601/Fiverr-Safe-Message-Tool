@@ -29,7 +29,8 @@ const riskyWords = [
 
 // Insert hyphen in middle of risky word (cleaned)
 const customHyphenPositions = {
-    "payment": [2, 4],
+    "payment": [2],
+    "payments": [2],
 };
 
 function insertHyphen(word) {
