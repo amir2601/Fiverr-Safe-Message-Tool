@@ -4,7 +4,7 @@ const riskyWords = [
     "whatsapp", "telegram", "skype", "zoom", "meet", "hangouts", "viber", "imo", "signal",
 
     // Payment & financial
-    "pay", "payment", "paypal", "venmo", "cashapp", "bank", "western union", "moneygram", "btc", "bitcoin", "crypto", "wallet",
+    "pay", "payment", "payments", "paypal", "venmo", "cashapp", "bank", "western union", "moneygram", "btc", "bitcoin", "crypto", "wallet",
     "wire transfer", "invoice", "direct payment", "outside fiverr", "outside fiver", "off fiverr", "off fiver", "send money", "money",
 
     // External links/platforms
