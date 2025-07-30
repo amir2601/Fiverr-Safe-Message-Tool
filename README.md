@@ -1,6 +1,6 @@
 # Fiverr-Safe-Message-Tool
 
-## 🔒 Secure Your Messages on Fiverr (English + বাংলা)
+## 🔒 Secure Your Messages on Fiverr
 
 A lightweight JavaScript tool that helps freelancers avoid violating Fiverr’s rules by automatically sanitizing risky words in their messages.
 
