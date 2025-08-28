@@ -5,7 +5,7 @@ const riskyWords = [
 
     // Payment & financial
     "pay", "payment", "payments", "purchase", "purchased", "paypal", "stripe", "venmo", "cashapp", "bank", "western union", "moneygram", "btc", "bitcoin", "crypto", "wallet",
-    "wire transfer", "invoice", "direct payment", "outside fiverr", "outside fiver", "off fiverr", "off fiver", "send money", "money", "pricing",
+    "wire transfer", "invoice", "direct payment", "outside fiverr", "outside fiver", "off fiverr", "off fiver", "send money", "money", "pricing", "salary", "payroll", "payslip", "invoice",
 
     // External links/platforms
     "personal website", "domain", "upwork", "freelancer", "freelancer.com", "peopleperhour", "toptal", "fiverr alternative", "Trustpilot reviews", "Google reviews",
